@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  mysql-server-8:
+    image: 'exahost/mysql8-lastest'
+    container_name: mysql-server-8
+    restart: always
+    ports:
+      - 33060:3306
+    volumes:
+      - 'db_data:/var/lib/mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: DwpESs7751eY
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - mysql-server-8:db
+    restart: always
+    ports:
+      - 8080:80
+
+volumes:
+  db_data:
