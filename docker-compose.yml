@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_PASSWORD: DwpESs7751eY
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: 'phpmyadmin/phpmyadmin'
     container_name: phpmyadmin
     links:
       - mysql-server-8:db
@@ -21,5 +21,22 @@ services:
     ports:
       - 8080:80
 
+  freeradius:
+    image: 'exahost/freeradius3-mysql'
+    container_name: freeradius3-mysql
+    links:
+       - mysql-server-8:db
+    restart: always
+    ports:
+      - '1812:1812/udp'
+      - '1813:1813/udp'
+    volumes:
+      - "./check-script.sh:/etc/raddb/check-script.sh"
+    environment:
+      MYSQL_DB: radius
+      MYSQL_USER: radius
+      MYSQL_USER_PASSWORD: DwpESs7751eY
+
 volumes:
   db_data:
+#  radius_conf:
